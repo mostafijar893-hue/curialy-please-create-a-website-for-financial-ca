@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FinCalc – Financial Calculators</title>
+  <meta name="description" content="Free loan, compound interest, savings goal and ROI calculators.">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <h1>FinCalc <span class="subtitle">– Financial Calculators</span></h1>
+      <div class="currency-picker">
+        <label for="currency">Currency</label>
+        <select id="currency">
+          <option value="USD" selected>USD ($)</option>
+          <option value="EUR">EUR (€)</option>
+          <option value="GBP">GBP (£)</option>
+          <option value="INR">INR (₹)</option>
+          <option value="BDT">BDT (৳)</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <nav class="tabs" role="tablist" aria-label="Calculators">
+      <button type="button" role="tab" id="tab-loan" aria-controls="panel-loan" aria-selected="true">Loan / Mortgage</button>
+      <button type="button" role="tab" id="tab-compound" aria-controls="panel-compound" aria-selected="false" tabindex="-1">Compound Interest</button>
+      <button type="button" role="tab" id="tab-savings" aria-controls="panel-savings" aria-selected="false" tabindex="-1">Savings Goal</button>
+      <button type="button" role="tab" id="tab-roi" aria-controls="panel-roi" aria-selected="false" tabindex="-1">ROI / CAGR</button>
+    </nav>
+
+    <!-- Loan -->
+    <section id="panel-loan" class="panel" role="tabpanel" aria-labelledby="tab-loan">
+      <h2>Loan / Mortgage Calculator</h2>
+      <form id="form-loan" novalidate>
+        <div class="fields">
+          <div class="field"><label for="loan-principal">Loan amount</label>
+            <input id="loan-principal" name="principal" type="number" step="any" min="0" value="200000"></div>
+          <div class="field"><label for="loan-rate">Annual interest rate (%)</label>
+            <input id="loan-rate" name="rate" type="number" step="any" min="0" value="6"></div>
+          <div class="field"><label for="loan-years">Loan term (years)</label>
+            <input id="loan-years" name="years" type="number" step="any" min="0" value="30"></div>
+        </div>
+        <button type="submit" class="btn">Calculate</button>
+      </form>
+      <div class="errors" id="errors-loan" role="alert"></div>
+      <div class="results" id="results-loan" hidden>
+        <div class="cards">
+          <div class="card highlight"><span class="card-label">Monthly payment</span><span class="card-value" data-key="payment"></span></div>
+          <div class="card"><span class="card-label">Total paid</span><span class="card-value" data-key="totalPaid"></span></div>
+          <div class="card"><span class="card-label">Total interest</span><span class="card-value" data-key="totalInterest"></span></div>
+        </div>
+        <h3>Yearly amortization</h3>
+        <div class="table-wrap">
+          <table id="table-loan">
+            <thead><tr><th scope="col">Year</th><th scope="col">Principal paid</th><th scope="col">Interest paid</th><th scope="col">Ending balance</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Compound -->
+    <section id="panel-compound" class="panel" role="tabpanel" aria-labelledby="tab-compound" hidden>
+      <h2>Compound Interest Calculator</h2>
+      <form id="form-compound" novalidate>
+        <div class="fields">
+          <div class="field"><label for="comp-initial">Initial deposit</label>
+            <input id="comp-initial" name="initial" type="number" step="any" min="0" value="10000"></div>
+          <div class="field"><label for="comp-monthly">Monthly contribution</label>
+            <input id="comp-monthly" name="monthly" type="number" step="any" min="0" value="200"></div>
+          <div class="field"><label for="comp-rate">Annual interest rate (%)</label>
+            <input id="comp-rate" name="rate" type="number" step="any" min="0" value="7"></div>
+          <div class="field"><label for="comp-years">Years</label>
+            <input id="comp-years" name="years" type="number" step="any" min="0" value="20"></div>
+          <div class="field"><label for="comp-freq">Compounding</label>
+            <select id="comp-freq" name="freq">
+              <option value="1">Annually</option>
+              <option value="4">Quarterly</option>
+              <option value="12" selected>Monthly</option>
+              <option value="365">Daily</option>
+            </select></div>
+        </div>
+        <button type="submit" class="btn">Calculate</button>
+      </form>
+      <div class="errors" id="errors-compound" role="alert"></div>
+      <div class="results" id="results-compound" hidden>
+        <div class="cards">
+          <div class="card highlight"><span class="card-label">Final balance</span><span class="card-value" data-key="finalBalance"></span></div>
+          <div class="card"><span class="card-label">Total contributions</span><span class="card-value" data-key="totalContributions"></span></div>
+          <div class="card"><span class="card-label">Total interest earned</span><span class="card-value" data-key="totalInterest"></span></div>
+        </div>
+        <h3>Yearly growth</h3>
+        <div class="table-wrap">
+          <table id="table-compound">
+            <thead><tr><th scope="col">Year</th><th scope="col">Balance</th><th scope="col">Contributions</th><th scope="col">Interest</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Savings -->
+    <section id="panel-savings" class="panel" role="tabpanel" aria-labelledby="tab-savings" hidden>
+      <h2>Savings Goal Calculator</h2>
+      <form id="form-savings" novalidate>
+        <div class="fields">
+          <div class="field"><label for="sav-target">Target amount</label>
+            <input id="sav-target" name="target" type="number" step="any" min="0" value="50000"></div>
+          <div class="field"><label for="sav-initial">Current savings</label>
+            <input id="sav-initial" name="initial" type="number" step="any" min="0" value="5000"></div>
+          <div class="field"><label for="sav-rate">Annual interest rate (%)</label>
+            <input id="sav-rate" name="rate" type="number" step="any" min="0" value="4"></div>
+          <div class="field"><label for="sav-years">Years to reach goal</label>
+            <input id="sav-years" name="years" type="number" step="any" min="0" value="10"></div>
+        </div>
+        <button type="submit" class="btn">Calculate</button>
+      </form>
+      <div class="errors" id="errors-savings" role="alert"></div>
+      <div class="results" id="results-savings" hidden>
+        <p class="note" id="note-savings" hidden>Your current savings will already reach this goal with interest. No monthly deposit is needed.</p>
+        <div class="cards">
+          <div class="card highlight"><span class="card-label">Required monthly deposit</span><span class="card-value" data-key="monthly"></span></div>
+          <div class="card"><span class="card-label">Total deposited</span><span class="card-value" data-key="deposited"></span></div>
+          <div class="card"><span class="card-label">Interest earned</span><span class="card-value" data-key="interest"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROI -->
+    <section id="panel-roi" class="panel" role="tabpanel" aria-labelledby="tab-roi" hidden>
+      <h2>Investment ROI / CAGR Calculator</h2>
+      <form id="form-roi" novalidate>
+        <div class="fields">
+          <div class="field"><label for="roi-initial">Initial investment</label>
+            <input id="roi-initial" name="initial" type="number" step="any" min="0" value="10000"></div>
+          <div class="field"><label for="roi-final">Final value</label>
+            <input id="roi-final" name="final" type="number" step="any" min="0" value="18000"></div>
+          <div class="field"><label for="roi-years">Years held</label>
+            <input id="roi-years" name="years" type="number" step="any" min="0" value="5"></div>
+        </div>
+        <button type="submit" class="btn">Calculate</button>
+      </form>
+      <div class="errors" id="errors-roi" role="alert"></div>
+      <div class="results" id="results-roi" hidden>
+        <div class="cards">
+          <div class="card highlight"><span class="card-label">Total return (ROI)</span><span class="card-value" data-key="roiPct"></span></div>
+          <div class="card"><span class="card-label">Gain / loss</span><span class="card-value" data-key="gain"></span></div>
+          <div class="card"><span class="card-label">Annualized return (CAGR)</span><span class="card-value" data-key="cagrPct"></span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container"><p>Estimates only, not financial advice.</p></div>
+  </footer>
+
+  <script src="js/finance.js" defer></script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>
